@@ -1,4 +1,6 @@
-
+var sea, boat;
+    
+ var seaBackground,  boat_Swaying
 
 
 function preload(){
