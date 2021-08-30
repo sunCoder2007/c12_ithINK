@@ -1,103 +1,43 @@
-var trex, trex_running, trex_collided;
-var ground, invisibleGround, groundImage;
-
-
-var cloud, clouds;
-
-var score;
+var sea, boat;
+    
+ var seaBackground,  boat_Swaying
 
 
 function preload(){
-  trex_running = loadAnimation("trex1.png","trex2.png","trex3.png");
-  trex_collided = loadImage("trex_collided.png");
-  
-  groundImage = loadImage("ground2.png");
-  
-  clouds = loadImage("cloud.png");
-  
+  boat_Swaying = loadAnimation("ship-1.png","ship-2.png","ship-3.png","ship-4.png" );
+  seaBackground = loadImage("sea.png");
 }
 
-function setup() {
+function setup(){
+  
+ // making background
+ sea = createSprite( 200, 200, 400, 20);
+ sea.addImage("sea", seaBackground)
+ sea.scale=0.23
+ 
+ 
+  
+ 
+  // creating boat 
+  createCanvas(700,400);
+  boat = createSprite(200, 300, 10, 10);
+  boat.addAnimation("swaying", boat_Swaying);
+  boat.scale=0.2;
 
-  createCanvas(600,200)
-  
-  //create a trex sprite
-  trex = createSprite(50,160,20,50);
-  trex.addAnimation("running", trex_running);
-  trex.scale = 0.5;
-  
-  //create a ground sprite
-  ground = createSprite(200,180,400,20);
-  ground.addImage("ground",groundImage);
-  ground.x = ground.width /2;
-  ground.velocityX = -4;
-  
-  //creating invisible ground
-  invisibleGround = createSprite(200,190,400,10);
-  invisibleGround.visible = false;
-  
-  //generate random numbers
-  var rand =  Math.round(random(1,100))
-  console.log(rand)
 
+  
 }
 
 function draw() {
-  //set background color
-  background(180);
-  
-  //console.log(trex.y)
-  
-  
-  
-  // jump when the space key is pressed
-  if(keyDown("space")&& trex.y >= 100) {
-    trex.velocityY = -10;
+  background("blue");
+ 
+  // making ship move (loop)
+  sea.velocityX=3;
+  console.log(sea.x);
+  if (sea.x>400){
+    sea.x=200
   }
-  
-  //gravity
-  trex.velocityY = trex.velocityY + 0.8
-  
 
-  //infinite background
-  if (ground.x < 0){
-    ground.x = ground.width/2;
-  }
-  
-  //stop trex from falling down
-  trex.collide(invisibleGround);
-  
-  //Spawn Clouds
-  spawnClouds();
-  
-  drawSprites();
+
+    drawSprites();
 }
-
-//function to spawn the clouds
-function spawnClouds(){
- // write your code here 
- if (frameCount%60===0){
-  cloud = createSprite(600,100,40,10);
-  cloud.scale=0.7;
-  cloud.y = Math.round(random(10,60))
-
-  cloud.addImage("clouds", clouds);
-  cloud.velocityX=-3;
- 
- 
- console.log(trex.depth)
- console.log(cloud.depth)
-
-cloud.depth=trex.depth;
-trex.depth=trex.depth+1;
-
-}
- 
- 
- 
- 
- 
-}
-
-
-
